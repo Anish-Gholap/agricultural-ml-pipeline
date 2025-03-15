@@ -1,2 +1,5 @@
 # ignore python environments
 *venv/*
+
+# database
+*.db
