@@ -1,0 +1,66 @@
+data:
+  path: '../data/agri.db'
+  cat_target: 'Plant Type-Stage'
+  num_target: 'Temperature Sensor (°C)'
+  numerical_features_reg: [
+    'Light Intensity Sensor (lux)',
+    'CO2 Sensor (ppm)',
+    'EC Sensor (dS/m)',
+    'O2 Sensor (ppm)',
+    'Nutrient N Sensor (ppm)',
+    'Nutrient P Sensor (ppm)',
+    'Nutrient K Sensor (ppm)',
+    'pH Sensor',
+    'Water Level Sensor (mm)'
+  ]
+
+  numerical_features_class: [
+    'Temperature Sensor (°C)',
+    'Light Intensity Sensor (lux)',
+    'CO2 Sensor (ppm)',
+    'EC Sensor (dS/m)',
+    'O2 Sensor (ppm)',
+    'Nutrient N Sensor (ppm)',
+    'Nutrient P Sensor (ppm)',
+    'Nutrient K Sensor (ppm)',
+    'pH Sensor',
+    'Water Level Sensor (mm)'
+  ]
+
+  categorical_features_reg: ['Plant Type-Stage', 'Previous Cycle Plant Type', 'System Location Code']
+
+  categorical_features_class: ['Previous Cycle Plant Type', 'System Location Code']
+
+
+models:
+  rf:
+    n_estimators: [100, 200, 300, 400, 500]
+    max_depth: [10, 20, 30, 40, 50]
+    min_samples_split: [2, 5, 10]
+    min_samples_leaf: [1, 2, 4]
+    max_features: ['sqrt', 'log2']
+    bootstrap: [True, False]
+  
+  svm:
+    kernel: ['linear', 'rbf', 'poly', 'sigmoid']
+    C: [0.1, 1, 10, 100]
+    gamma: [1, 0.1, 0.01, 0.001, 'scale', 'auto']
+    degree: [2, 3, 4, 5]
+    coef0: [0.0, 0.1, 0.5, 1.0]
+
+  svr:
+    C: [0.1, 1, 10, 100]
+    gamma: ['scale', 'auto', 0.1, 0.01]
+    kernel: ['rbf', 'linear', 'poly']
+    epsilon: [0.01, 0.1, 0.2, 0.5]
+    degree: [2, 3, 4]
+    coef0: [0.0, 0.1, 0.5]
+
+experiment:
+  models: 
+      classification: ['rf', 'svc']
+      regression: ['svr']
+  
+  output_model_path: '../models'
+  random_state: 42
+  n_iter: 20
