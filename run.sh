@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Activate the virtual environment if needed
+# source .venv/bin/activate
+
 # Define the configuration file path
 CONFIG_FILE="src/config.yaml"
 
