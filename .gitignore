@@ -5,4 +5,4 @@
 *.db
 
 # models saved
-*.pkl
+/models/
