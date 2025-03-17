@@ -35,12 +35,6 @@ data:
     'light_temp_ratio'
   ]
 
-  # numerical_features_class: [
-  #   'EC Sensor (dS/m)',
-  #   'O2 Sensor (ppm)',
-  #   'Nutrient N Sensor (ppm)',
-  # ]
-
   categorical_features_reg: ['Plant Type-Stage', 'Previous Cycle Plant Type', 'System Location Code']
 
   categorical_features_class: ['Previous Cycle Plant Type', 'System Location Code', 'pH Category Clustered']
@@ -115,7 +109,7 @@ models:
 
 experiment:
   models: 
-      classification: ['rf', 'svc', 'gb']
+      classification: ['rf', 'gb']
       regression: ['rf_reg']
   
   output_model_path: '../models'
