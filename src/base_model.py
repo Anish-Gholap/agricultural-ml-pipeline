@@ -123,8 +123,6 @@ class BaseModel:
     y_class = df_classfication[classification_target]
     X_class = df_classfication.drop(columns=col_to_drop_class).copy()
     
-    print(X_class.columns.to_list())
-    
     
     if task == 'regression':
       X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(X_reg, y_reg, test_size=0.2, random_state=self.config['experiment']['random_state'])

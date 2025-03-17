@@ -14,8 +14,7 @@ fi
 
 echo "===== Starting Agricultural Machine Learning Pipeline ====="
 
-
-echo "Starting temperature prediction task..."
+# echo "Starting temperature prediction task..."
 python src/train.py --config $CONFIG_FILE --task regression
 python src/evaluate.py --config $CONFIG_FILE --task regression
 
