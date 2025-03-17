@@ -11,6 +11,7 @@ import os
 import yaml
 import joblib
 from label_mappings import plant_stage_mapping, plant_type_mapping
+from feature_engineering import add_npk_ratio, add_light_Co2_ratio, add_ph_category, add_light_temp_ratio
 
 class BaseModel:
   def __init__(self, config_path):
@@ -31,7 +32,7 @@ class BaseModel:
     return df
   
   def preprocess_data(self, X, y=None, fit=False, task='regression'):
-    num_pipeline = make_pipeline(SimpleImputer(strategy='median'), StandardScaler())
+    num_pipeline = make_pipeline(SimpleImputer(strategy='median'),  StandardScaler())
     cat_pipeline = make_pipeline(OneHotEncoder(handle_unknown="ignore"))
     
     if task == 'regression':
@@ -41,15 +42,14 @@ class BaseModel:
     else:
       num_attribs = self.config['data']['numerical_features_class']
       cat_attribs = self.config['data']['categorical_features_class']
-
-    
+      
     if fit:
       self.column_transformer = ColumnTransformer([
         ("num", num_pipeline, num_attribs),
         ("cat", cat_pipeline, cat_attribs)
       ])
       X_transformed = self.column_transformer.fit_transform(X)
-    
+      
     else: 
       if self.column_transformer is None:
         raise ValueError("fit column transformer first")
@@ -93,16 +93,37 @@ class BaseModel:
     df = df[(df['Light Intensity Sensor (lux)'] >= 0) & (df['EC Sensor (dS/m)'] >= 0) & (df['Temperature Sensor (°C)'] >= 0)]
     
     df_regression = df.copy()
-    df_classficaiton = df.copy()
+    df_classfication = df.copy()
     
     regression_target = 'Temperature Sensor (°C)'
     classification_target = 'Plant Type-Stage'
     
-    y_reg = df_regression[regression_target]
-    X_reg = df_regression.drop(columns=regression_target).copy()
     
-    y_class = df_classficaiton[classification_target]
-    X_class = df_classficaiton.drop(columns=classification_target).copy()
+    col_to_drop_reg = [
+      'EC Sensor (dS/m)',
+      'O2 Sensor (ppm)',
+      'Nutrient N Sensor (ppm)',
+      'Nutrient P Sensor (ppm)',
+      'Nutrient K Sensor (ppm)',
+      'pH Sensor',
+      'Water Level Sensor (mm)'
+    ]
+    
+    col_to_drop_class = []
+    
+    col_to_drop_reg.append(regression_target)
+    y_reg = df_regression[regression_target]
+    df_regression = add_npk_ratio(df_regression)
+    df_regression = add_light_Co2_ratio(df_regression)
+    X_reg = df_regression.drop(columns=col_to_drop_reg).copy()
+    
+    col_to_drop_class.append(classification_target)
+    df_classfication = add_ph_category(df_classfication)
+    df_classfication = add_light_temp_ratio(df_classfication)
+    y_class = df_classfication[classification_target]
+    X_class = df_classfication.drop(columns=col_to_drop_class).copy()
+    
+    print(X_class.columns.to_list())
     
     
     if task == 'regression':

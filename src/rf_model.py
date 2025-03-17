@@ -1,6 +1,9 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from base_model import BaseModel
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 class rf_PlantTypeStageClassifier(BaseModel):
   def __init__(self, config_path):
@@ -24,4 +27,4 @@ class rf_PlantTypeStageClassifier(BaseModel):
     
   def predict(self, X_single):
     return super().predict(X_single)
-    
+  

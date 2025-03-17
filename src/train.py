@@ -8,7 +8,10 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from rf_model import rf_PlantTypeStageClassifier
 from svc_model import svc_PlantTypeStageClassifier
+from gb_model import gb_PlantTypeStageClassifier
 from svr_model import svr_TemperaturePredictor
+from rf_reg_model import rf_TemperaturePredictor
+from xg_reg_model import xgb_TemperaturePredictor
 
 def train(config_path, task):
     with open(config_path, 'r') as file:
@@ -20,13 +23,16 @@ def train(config_path, task):
     if task == 'classification':
         model_classes = {
             'rf': rf_PlantTypeStageClassifier,
-            'svc': svc_PlantTypeStageClassifier
+            'svc': svc_PlantTypeStageClassifier,
+            'gb': gb_PlantTypeStageClassifier
         }
         print(f"Starting plant type-stage classification task")
     
     elif task == 'regression':
         model_classes = {
-          'svr': svr_TemperaturePredictor
+          'svr': svr_TemperaturePredictor,
+          'rf_reg': rf_TemperaturePredictor,
+          'xg_reg': xgb_TemperaturePredictor
         }
         print(f"Starting temperature prediction regression task")
     
