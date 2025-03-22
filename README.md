@@ -2,7 +2,7 @@
 
 ## Anish Gholap (AIIP5 Technical Assessment)
 
-Email: anish.gholap@example.com
+Email: anishgholap@gmail.com
 
 ## Project Overview
 
@@ -17,13 +17,6 @@ The models help AgroTech Innovations optimize resource allocation, improve crop 
 
 ```
 .
-├── data/
-│   ├── agri.db
-├── models/
-│   ├── rf_reg_best_model.pkl
-│   ├── xgb_reg_best_model.pkl
-│   ├── rf_best_model.pkl
-│   ├── gb_best_model.pkl
 ├── src/
 │   ├── base_model.py
 │   ├── config.yaml
